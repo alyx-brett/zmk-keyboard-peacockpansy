@@ -1,0 +1,15 @@
+# Copyright (c) 2025 Alyx
+# SPDX-License-Identifier: MIT
+
+if SHIELD_PEACOCKPANSY
+
+config ZMK_KEYBOARD_NAME
+    default "Peacock Pansy"
+
+config ZMK_POINTING
+    default y
+
+config SPI
+    default y
+
+endif
