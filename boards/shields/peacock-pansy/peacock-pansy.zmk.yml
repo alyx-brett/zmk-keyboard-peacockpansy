@@ -1,0 +1,11 @@
+file_format: "1"
+id: peacock-pansy
+name: "Peacock Pansy"
+type: shield
+url: https://github.com/alyx-brett/zmk-keyboard-peacockpansy/
+requires: [pro_micro]
+exposes: []
+features:
+  - keys
+  - encoder
+  - pointer
