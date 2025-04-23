@@ -11,7 +11,7 @@
 #define CONFIG 3
 
 &msc
-{ trigger-period-ms = <16>
+{ trigger-period-ms = <10>
 ; };
 
 / {
@@ -20,8 +20,8 @@
     { compatible = "zmk,behavior-sensor-rotate"
       ; #sensor-binding-cells = <0>
       // high MOVE_Y and low tap-ms make for happy scrolling
-      ; bindings = <&msc MOVE_Y(72)>, <&msc MOVE_Y(-72)>
-      ; tap-ms = <20>
+      ; bindings = <&msc MOVE_Y(120)>, <&msc MOVE_Y(-120)>
+      ; tap-ms = <12>
     ; }
   ; };
 
