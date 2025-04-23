@@ -10,12 +10,9 @@
 #define NAVFN 2
 #define CONFIG 3
 
-&msc
-{ trigger-period-ms = <10>
-; };
-
-/ {
-  behaviors
+&msc { trigger-period-ms = <10> ; }
+; /
+{ behaviors
   { scroll_encoder: scroll_encoder
     { compatible = "zmk,behavior-sensor-rotate"
       ; #sensor-binding-cells = <0>
@@ -23,31 +20,42 @@
       ; bindings = <&msc MOVE_Y(120)>, <&msc MOVE_Y(-120)>
       ; tap-ms = <12>
     ; }
-  ; };
-
-  macros
+    ; bksp: layer_backspace
+    { compatible = "zmk,behavior-hold-tap"
+      ; #binding-cells = <2>
+      ; flavor = "tap-preferred"
+      ; tapping-term-ms = <200>
+      ; bindings = <&mo>, <&kp>
+      ; display-name = "Layer-Backspace"
+      ; quick-tap-ms = <150>
+    ; }
+  ; }
+  ; macros
   { ZMK_MACRO(save
     , wait-ms = <30>
     ; tap-ms = <40>
     ; bindings =  <&macro_tap &kp ESC &kp COLON &kp W &kp RET>
     ; )
-  };
-
-  combos
+  }
+  ; combos
   { compatible = "zmk,combos"
-    ; combos_lgui  { key-positions = < 0  8>; bindings = <&kp LGUI >; }
-    ; combos_lalt  { key-positions = < 1  9>; bindings = <&kp LALT >; }
-    ; combos_lshft { key-positions = < 2 10>; bindings = <&kp LSHFT>; }
-    ; combos_lctrl { key-positions = < 3 11>; bindings = <&kp LCTRL>; }
-    ; combos_rctrl { key-positions = < 4 12>; bindings = <&kp RCTRL>; }
-    ; combos_rshft { key-positions = < 5 13>; bindings = <&kp RSHFT>; }
-    ; combos_ralt  { key-positions = < 6 14>; bindings = <&kp RALT >; }
-    ; combos_rgui  { key-positions = < 7 15>; bindings = <&kp RGUI >; }
-    ; combos_mclk  { key-positions = <24 25>; bindings = <&mkp MCLK>; }
-    ;
-  };
-
-  keymap
+    // upper rows
+  ; combo_lgui  { key-positions = < 0  8>; bindings = <&kp LGUI >; }
+  ; combo_lalt  { key-positions = < 1  9>; bindings = <&kp LALT >; }
+  ; combo_lshft { key-positions = < 2 10>; bindings = <&kp LSHFT>; }
+  ; combo_lctrl { key-positions = < 3 11>; bindings = <&kp LCTRL>; }
+  ; combo_rctrl { key-positions = < 4 12>; bindings = <&kp RCTRL>; }
+  ; combo_rshft { key-positions = < 5 13>; bindings = <&kp RSHFT>; }
+  ; combo_ralt  { key-positions = < 6 14>; bindings = <&kp RALT >; }
+  ; combo_rgui  { key-positions = < 7 15>; bindings = <&kp RGUI >; }
+    // lower rows
+  ; combo_tab   { key-positions = <10 18>; bindings = <&kp TAB  >; }
+  ; combo_esc   { key-positions = <12 20>; bindings = <&kp ESC  >; }
+  ; combo_save  { key-positions = <13 21>; bindings = <&save    >; }
+    // thumbs
+  ; combo_mclk  { key-positions = <24 25>; bindings = <&mkp MCLK>; }
+  ; }
+  ; keymap
   { compatible = "zmk,keymap"
     // | B | Y | O    | U        || L         | D         | W | V |
     // | C | I | E    | A        || H         | T         | S | N |
@@ -55,10 +63,10 @@
     //         | RET  | NAV(SPC) || SYM(BSPC) | CONF(ESC) |
     ; default_layer
     { bindings = <
-        &kp B &kp Y &kp O &kp U  &kp L   &kp D &kp W &kp V
-        &kp C &kp I &kp E &kp A  &kp H   &kp T &kp S &kp N
-        &kp G &kp X &kp J &kp K  &kp R   &kp M &kp F &kp P
-        &lt NAVFN RET  &mt LSHFT SPACE  &lt SYMNUM BSPC &lt CONFIG ESC
+      &kp B &kp Y &kp O &kp U  &kp L   &kp D &kp W &kp V
+      &kp C &kp I &kp E &kp A  &kp H   &kp T &kp S &kp N
+      &kp G &kp X &kp J &kp K  &kp R   &kp M &kp F &kp P
+      &lt NAVFN RET  &mt LSHFT SPACE  &bksp CONFIG BSPC &mo SYMNUM
       >
       ; sensor-bindings = <&scroll_encoder>
     ; }
@@ -68,12 +76,12 @@
     //         | SAVE | TAB  ||   |   |
     ; symnum_layer
     { bindings = <
-        &none     &kp GRAVE &kp BSLH  &kp FSLH      &kp N1 &kp N2 &kp N3 &kp N4
-        &kp SQT   &kp MINUS &kp COMMA &kp DOT       &kp N5 &kp N6 &kp N7 &kp N8
-        &kp EQUAL &kp SEMI  &kp LBKT  &kp RBKT      &kp N9 &kp N0 &kp Z  &kp Q
-        &save     &mt LSHFT TAB &trans &none
-      >;
-      sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>
+      &none     &kp GRAVE &kp BSLH  &kp FSLH      &kp N1 &kp N2 &kp N3 &kp N4
+      &kp SQT   &kp MINUS &kp COMMA &kp DOT       &kp N5 &kp N6 &kp N7 &kp N8
+      &kp EQUAL &kp SEMI  &kp LBKT  &kp RBKT      &kp N9 &kp N0 &kp Z  &kp Q
+      &save     &mt LSHFT TAB &trans &none
+      >
+      ; sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP>
     ; }
     // |      |      |      |     || F1  | F2  | F3  | F4  |
     // | HOME | PGDN | PGUP | END || F5  | F6  | F7  | F8  |
@@ -81,10 +89,10 @@
     //               |      |     || DEL |     |
     ; navfn_layer
     { bindings = <
-        &none    &none     &none     &none     &kp F1  &kp F2  &kp F3  &kp F4
-        &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp F5  &kp F6  &kp F7  &kp F8
-        &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp F9  &kp F10 &kp F11 &kp F12
-        &trans    &trans    &kp DEL &caps_word
+      &none    &none     &none     &none     &kp F1  &kp F2  &kp F3  &kp F4
+      &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp F5  &kp F6  &kp F7  &kp F8
+      &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &kp F9  &kp F10 &kp F11 &kp F12
+      &trans    &trans    &kp DEL &caps_word
       >
     ; }
     // |  |  |  |  || BT1    | BT2 | BT3 | BT4   |
@@ -93,11 +101,12 @@
     //       |  |  ||        |     |
     ; config_layer
     { bindings = <
-        &none &none &none &none  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
-        &none &none &none &none &bt BT_SEL 4 &bt BT_NXT   &bt BT_PRV   &none
-        &none           &none           &none           &none  &bt BT_CLR   &none        &out OUT_TOG &sys_reset
-        &kp CAPS        &trans           &trans       &trans
+      &none &none &none &none  &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3
+      &none &none &none &none &bt BT_SEL 4 &bt BT_NXT   &bt BT_PRV   &none
+      &none           &none           &none           &none  &bt BT_CLR   &none        &out OUT_TOG &sys_reset
+      &kp CAPS        &trans           &trans       &trans
       >
     ; }
   ; }
-; };
+; }
+;
